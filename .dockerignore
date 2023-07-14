@@ -1,0 +1,16 @@
+**/.git
+.elixir_ls/
+.gitignore
+.editorconfig
+.github
+.circleci
+Dockerfile*
+helm/*
+terragrunt.hcl
+README.md
+docker-compose*
+Jenkinsfile
+/.nix-hex/
+/.nix-mix/
+/.direnv/
+/.postgres/

@@ -1,0 +1,62 @@
+version: "3.8"
+
+services:
+  simple_ms_blocklist:
+    stdin_open: true
+    tty: true
+    build:
+      context: .
+      target: build
+      args:
+        MIX_ENV: prod
+    container_name: simple_ms_blocklist
+    command: iex -S mix phx.server
+    restart: unless-stopped
+    ports:
+      - "4000:4000"
+      - "4001:4001"
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    depends_on:
+      - db
+    networks:
+      - admin
+    logging:
+      driver: json-file
+      options:
+        max-size: "50m"
+        max-file: "10"
+
+  db:
+    image: postgres:13.5
+    container_name: simple_ms_blocklist_db
+    environment:
+      POSTGRES_PASSWORD: admin
+      POSTGRES_USER: admin
+      POSTGRES_DB: simple_ms_blocklist
+    ports:
+      - "5432:5432"
+    restart: always
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    networks:
+      - admin
+    logging:
+      driver: json-file
+      options:
+        max-size: "50m"
+        max-file: "10"
+
+networks:
+  admin:
+    name: admin
+
+volumes:
+  postgres_data:
