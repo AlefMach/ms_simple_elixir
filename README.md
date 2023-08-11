@@ -2,6 +2,8 @@
 
 ## Microservice blocklist
 
+![](logo.png#vitrinedev)
+
 Allow verification of a partner person on the block list and display as fraudster or empty output in case of negative response.
 
 ---
