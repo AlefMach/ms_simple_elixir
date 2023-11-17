@@ -14,19 +14,6 @@ config :simple_ms_blocklist,
 # ---------------------------#
 config :simple_ms_blocklist, :socket, check_origin: false
 
-# ---------------------------#
-# Prometheus / Grafana
-# ---------------------------#
-config :simple_ms_blocklist, SimpleMsBlocklistWeb.PromEx,
-  metrics_server: [port: String.to_integer(System.get_env("PROMEX_PORT", "4003"))],
-  grafana: [
-    datasource: System.get_env("GRAFANA_DATASOURCE"),
-    host: System.get_env("GRAFANA_HOST"),
-    auth_token: System.get_env("GRAFANA_TOKEN"),
-    folder_name: System.get_env("GRAFANA_FOLDER"),
-    upload_dashboards_on_start: false
-  ]
-
 config :simple_ms_blocklist,
   ecto_repos: [SimpleMsBlocklist.Repo]
 

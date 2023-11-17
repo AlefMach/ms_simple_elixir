@@ -14,9 +14,6 @@ RUN apk update \
     && echo $TZ > /etc/timezone \
     && apk del tzdata
 
-RUN mkdir /root/.ssh
-
-RUN ssh-keyscan github.com >> /root/.ssh/known_hosts
 
 WORKDIR /app
 
@@ -29,7 +26,7 @@ COPY config config
 
 COPY . ./
 
-RUN --mount=type=ssh mix do deps.get, deps.compile
+RUN mix do deps.get, deps.compile
 
 RUN mix do compile --warnings-as-errors, release
 
